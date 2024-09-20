@@ -60,7 +60,7 @@ namespace VirtualClassRoom.Controllers
         [HttpGet]
         public ActionResult<string> getStudentsByClassRoomID(string classRoomID)
         {
-            return Ok("This is a sample test");
+            return Ok("Hello");
         }
     }
 
