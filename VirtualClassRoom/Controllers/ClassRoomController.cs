@@ -55,13 +55,6 @@ namespace VirtualClassRoom.Controllers
         {
             return _classRoomMediator.DeleteClassRoom(ClassRoomID) ? Ok() : NotFound();
         }
-
-        [Route("getAllStudentsOfClassRoom/{classRoomID}")]
-        [HttpGet]
-        public ActionResult<string> getStudentsByClassRoomID(string classRoomID)
-        {
-            return Ok("Hello");
-        }
     }
 
 }
