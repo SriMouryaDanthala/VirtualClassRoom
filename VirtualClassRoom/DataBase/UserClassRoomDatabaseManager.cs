@@ -7,7 +7,7 @@ namespace VirtualClassRoom.DataBase
     {
         private string _dbManager = new DataBaseManager().getConnectionString();
 
-        public UserClassRoom insertUserClassRoomRelation(UserClassRoom userClassRoom)
+        public UserClassRoom insertUserClassRoomRelation(string userID, string classRoomID)
         {
             int rowsAffected = 0;
             try
@@ -15,7 +15,7 @@ namespace VirtualClassRoom.DataBase
                 using (NpgsqlConnection conn = new NpgsqlConnection(_dbManager))
                 {
                     conn.Open();
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(createUserClassRoomInsertionString(ref userClassRoom), conn))
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(createUserClassRoomInsertionString(userID,classRoomID), conn))
                     {
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
@@ -23,7 +23,12 @@ namespace VirtualClassRoom.DataBase
                 }
                 if (rowsAffected > 0)
                 {
-                    return userClassRoom;
+                    return new UserClassRoom
+                    {
+                        UserID = userID,
+                        ClassRoomID = classRoomID,
+                        UserClassRoomCreatedAt = DateTime.Now,
+                    };
                 }
                 return null;
             }
@@ -33,12 +38,37 @@ namespace VirtualClassRoom.DataBase
             }
         }
 
-        private string createUserClassRoomInsertionString(ref UserClassRoom userClassRoom)
+        public bool RemoveUserFromClassRoom(string userID, string classRoomID)
         {
-            userClassRoom.UserClassRoomCreatedAt = DateTime.Now;
+            int rowsAffected = 0;
+            try
+            {
+                using (NpgsqlConnection conn = new NpgsqlConnection(_dbManager))
+                {
+                    conn.Open();
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(createClassRoomRemovalString(userID, classRoomID), conn))
+                    {
+                        rowsAffected=cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private string createUserClassRoomInsertionString(string userID, string classRoomID)
+        {
             return $"INSERT INTO UserClassRoom (User_ID, ClassRoom_ID, UserClassRoom_CreatedAt)" +
-                $"SELECT \'{userClassRoom.UserID}\', \'{userClassRoom.ClassRoomID}\'," +
-                $"\'{userClassRoom.UserClassRoomCreatedAt.ToString("yyyy-MM-dd HH:mm:ss")}\';";
+                $"SELECT \'{userID}\', \'{classRoomID}\'," +
+                $"\'{DateTime.Today.ToString("yyyy-MM-dd HH:mm:ss")}\';";
+        }
+
+        private string createClassRoomRemovalString(string userID, string classRoomID)
+        {
+            return $"DELETE FROM UserClassRoom WHERE user_id = \'{userID}\' AND classroom_id = \'{classRoomID}\'";
         }
     }
 }
