@@ -12,12 +12,18 @@ namespace VirtualClassRoom.Controllers
         private UserEnrollmentMediator _mediator = new UserEnrollmentMediator();
         [Route("EnrollUserInClassRoom")]
         [HttpPost]
-        public ActionResult<UserClassRoom> enrollUserInClass(UserClassRoom userClassRoom)
+        public ActionResult<UserClassRoom> enrollUserInClass(string userID, string classRoomID)
         {
-            UserClassRoom newUserClassRoom = _mediator.enrollUserInClass(userClassRoom);
-
-            return newUserClassRoom != null ? Ok(newUserClassRoom) : BadRequest(userClassRoom);
-
+            UserClassRoom newUserClassRoom = _mediator.enrollUserInClass(userID,classRoomID);
+            return newUserClassRoom != null ? Ok(newUserClassRoom) : BadRequest();
         }
+
+        [Route("DeleteUserForm")]
+        [HttpDelete]
+        public ActionResult<bool> DeleteUserFormClassRoom(string userID, string classRoomID)
+        {
+            return _mediator.RemoveUserFromClassRoom(userID, classRoomID)? Ok(true) : BadRequest(false);
+        }
+
     }
 }
