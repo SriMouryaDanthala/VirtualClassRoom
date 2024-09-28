@@ -7,8 +7,9 @@ namespace VirtualClassRoom.Mediator
     public class UserEnrollmentMediator
     {
         private ClassRoomDatabaseManager _classroomdbManager = new ClassRoomDatabaseManager();
-        private UserDataBaseManager _userdbManager = new UserDataBaseManager(); 
+        private UserDataBaseManager _userdbManager = new UserDataBaseManager();
         private UserClassRoomDatabaseManager _userClassRommdbManager = new UserClassRoomDatabaseManager();
+        private UserMediator _userMediator = new UserMediator();    
 
         public UserClassRoom enrollUserInClass(string userID, string classRoomID)
         {
@@ -32,5 +33,13 @@ namespace VirtualClassRoom.Mediator
             }
             return false;
         }
+
+        public List<ClassRoomDTO> GetClassRoomsEnrolledByUser(string userID)
+        {
+            if(_userMediator.IsAValidUser(userID))
+                return _userClassRommdbManager.getAllClassRoomsEnrolledByUser(userID).OrderBy(x=>x.ClassRoomName).ToList();
+            return new List<ClassRoomDTO>();
+        }
+
     }
 }

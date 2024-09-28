@@ -58,5 +58,10 @@ namespace VirtualClassRoom.Mediator
             var encoding = new UnicodeEncoding();
             return provider.ComputeHash(encoding.GetBytes(password));
         }
+
+        public bool IsAValidUser(string userID)
+        {
+            return new UserDataBaseManager().getUserByUserID(userID) != null;
+        }
     }
 }
