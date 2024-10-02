@@ -113,7 +113,6 @@ namespace VirtualClassRoom.DataBase
         private string createInsertionStringForUser(ref User user)
         {
             user.UserID = Guid.NewGuid().ToString();
-            user.UserRole = Guid.NewGuid().ToString();
 
             string insertSequel = "INSERT INTO USERS (users_id, users_id_role, users_name, user_dob, user_password, user_insertedAt) SELECT " +
                 "\'"+user.UserID + "\', " +
@@ -127,7 +126,14 @@ namespace VirtualClassRoom.DataBase
 
         private string createSelectStringForUserByUserName(string userName)
         {
-            return $"SELECT * FROM USERS WHERE USERS_NAME = \'{userName}\';";
+            return $"SELECT users_id " +
+            $",userrole_name AS users_id_role " +
+            $",users_name " +
+            $",user_dob " +
+            $",user_insertedat " +
+            $"FROM users " +
+            $"INNER JOIN userRoles ON users_id_role = userrole_id " +
+            $"WHERE users_name = \'{userName}\' ;";
         }
 
         private string createUpdateStringForUserUpdation(User user)
