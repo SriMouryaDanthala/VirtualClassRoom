@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Persistence.DBContext;
-using VirtualClassRoom.Mediator;
-using VirtualClassRoomMediator.Mediators;
+using System.Reflection;
+using VirtualClassRoomMediator.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<VirtualClassRoomDbContext>(
         options => options.UseNpgsql("name=ConnectionStrings:PostgresqlConnection"));
 builder.Services.AddScoped<UserRoleDbContext>();
-builder.Services.AddScoped<VirtualClassRoomMediator.Mediators.UserRoleMediator>();
+builder.Services.RegisterMediators(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

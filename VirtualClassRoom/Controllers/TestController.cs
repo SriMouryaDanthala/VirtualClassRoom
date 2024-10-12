@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtualClassRoomDTO.DTOModels;
+using VirtualClassRoomMediator.Mediators;
 
 namespace VirtualClassRoom.Controllers
 {
@@ -8,8 +9,8 @@ namespace VirtualClassRoom.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        private readonly VirtualClassRoomMediator.Mediators.UserRoleMediator _mediator;
-        public TestController(VirtualClassRoomMediator.Mediators.UserRoleMediator mediator)
+        private UserRoleMediator _mediator;
+        public TestController(UserRoleMediator mediator)
         {
             _mediator = mediator;
         }
