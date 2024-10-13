@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using VirtualClassRoom.DataBase;
-using VirtualClassRoom.DataTypes;
-using VirtualClassRoom.DTO;
-using VirtualClassRoom.Mediator;
+using VirtualClassRoomDTO.DTOModels;
+using VirtualClassRoomDTO.GenericDataTypes;
+using VirtualClassRoomMediator.Mediators;
 
 
 namespace VirtualClassRoom.Controllers
@@ -12,44 +11,19 @@ namespace VirtualClassRoom.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private UserMediator _mediator = new UserMediator();
-        
-        [Route("CreateUser")]
+        private readonly UserMediator _mediator;
+        public UsersController(UserMediator mediator)
+        {
+            _mediator = mediator;
+        }
         [HttpPost]
-        public ActionResult<UserDTO> createUser(User user)
+        [Route("EnrollUser")]
+        public ActionResult<ApiResponse<List<UserDTO>>> CreateUser(UserRegistrationDTO newUser)
         {
-            return Ok(_mediator.createUser(user));
+            var res = _mediator.createUser(newUser);
+            return res.Success ? Ok(res) : BadRequest(res);
         }
-
-        [Route("GetUserByUserName/{userName}")]
-        [HttpGet]
-        public ActionResult<UserDTO> GetUser(string userName)
-        {
-            UserDTO user = _mediator.getUserByUserName(userName);
-            return user!=null ? Ok(user): NotFound();
-        }
-
-        [Route("UpdateUser")]
-        [HttpPut]
-        public ActionResult<UserDTO> UpdateUser(User user)
-        {
-            UserDTO updatedUser = _mediator.UpdateUser(user);
-            if (updatedUser != null)
-            {
-                return Ok(updatedUser);
-            }
-            return BadRequest(user);
-        }
-
-        [Route("DeleteUser/{userID}")]
-        [HttpDelete]
-        public ActionResult DeleteUser(string userID)
-        {
-            if (_mediator.DeleteUser(userID) > 0)
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
+        
+       
     }
 }

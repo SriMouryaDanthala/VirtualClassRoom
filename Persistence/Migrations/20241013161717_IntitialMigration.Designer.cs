@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.DBContext;
@@ -11,9 +12,11 @@ using Persistence.DBContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(VirtualClassRoomDbContext))]
-    partial class VirtualClassRoomDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241013161717_IntitialMigration")]
+    partial class IntitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,22 +48,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ClassRoomInchargeId");
 
-                    b.ToTable("ClassRooms");
-                });
-
-            modelBuilder.Entity("Persistence.Models.UserClassRoomJoin", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ClassRoomId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("UserId", "ClassRoomId");
-
-                    b.HasIndex("ClassRoomId");
-
-                    b.ToTable("UserClassRoomJoins");
+                    b.ToTable("ClassRoomModel");
                 });
 
             modelBuilder.Entity("Persistence.Models.UserModel", b =>
@@ -88,7 +76,7 @@ namespace Persistence.Migrations
                     b.HasIndex("UserRoleId")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("UserModel");
                 });
 
             modelBuilder.Entity("Persistence.Models.UserRoleModel", b =>
@@ -120,25 +108,6 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Persistence.Models.UserClassRoomJoin", b =>
-                {
-                    b.HasOne("Persistence.Models.ClassRoomModel", "ClassRoom")
-                        .WithMany("ClassRooms")
-                        .HasForeignKey("ClassRoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Persistence.Models.UserModel", "User")
-                        .WithMany("UserClassRoomJoins")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ClassRoom");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Persistence.Models.UserModel", b =>
                 {
                     b.HasOne("Persistence.Models.UserRoleModel", "UserRole")
@@ -150,16 +119,9 @@ namespace Persistence.Migrations
                     b.Navigation("UserRole");
                 });
 
-            modelBuilder.Entity("Persistence.Models.ClassRoomModel", b =>
-                {
-                    b.Navigation("ClassRooms");
-                });
-
             modelBuilder.Entity("Persistence.Models.UserModel", b =>
                 {
                     b.Navigation("ClassRooms");
-
-                    b.Navigation("UserClassRoomJoins");
                 });
 
             modelBuilder.Entity("Persistence.Models.UserRoleModel", b =>

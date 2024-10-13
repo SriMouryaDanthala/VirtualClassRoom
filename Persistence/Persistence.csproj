@@ -23,4 +23,8 @@
     <ProjectReference Include="..\DTO\VirtualClassRoomDTO.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
