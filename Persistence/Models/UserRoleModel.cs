@@ -14,6 +14,6 @@ namespace Persistence.Models
         public string UserRoleName { get; set; }
         public DateTime UserRoleTimestamp { get; set; }
 
-        public UserModel User { get; set; }
+        public ICollection<UserModel> User { get; set; }
     }
 }
