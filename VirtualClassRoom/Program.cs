@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Persistence.DBContext;
+using System;
 using System.Reflection;
 using VirtualClassRoomMediator.Extensions;
 
@@ -19,6 +20,20 @@ builder.Services.AddScoped<UserRoleDbContext>();
 builder.Services.RegisterMediators(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<VirtualClassRoomDbContext>();
+    try
+    {
+        dbContext.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        // Handle migration exceptions (optional)
+        Console.WriteLine($"Migration failed: {ex.Message}");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
