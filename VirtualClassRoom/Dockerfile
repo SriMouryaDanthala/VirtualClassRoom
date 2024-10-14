@@ -32,7 +32,7 @@ WORKDIR /app/publish
 RUN dotnet ef database update --no-build
 
 FROM base AS final
-WORKDIR /app
+WORKDIR /src/Persistence
 COPY --from=publish /app/publish .
 
 ENV ConnectionStrings__DefaultConnection="Host=dpg-cs6ebhtumphs73b7t9pg-a;Port=5432;Database=virtualclassroom_postgres_instance;Username=admin;Password=WfJw0yGLMCMhnuNbkvCN3Bg1AjTOwot3;"
