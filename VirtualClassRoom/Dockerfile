@@ -28,7 +28,7 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 RUN dotnet publish "./VirtualClassRoom.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Run migrations to update the database
-WORKDIR /app/Persistence
+WORKDIR /src/Persistence
 RUN dotnet ef database update --no-build --project Persistence.csproj
 
 FROM base AS final
