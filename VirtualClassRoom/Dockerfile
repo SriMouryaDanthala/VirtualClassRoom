@@ -28,11 +28,11 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 RUN dotnet publish "./VirtualClassRoom.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Run migrations to update the database
-WORKDIR /app/publish
+WORKDIR /app/Persistence
 RUN dotnet ef database update --no-build --project Persistence.csproj
 
 FROM base AS final
-WORKDIR /src/Persistence
+WORKDIR /app
 COPY --from=publish /app/publish .
 
 ENV ConnectionStrings__DefaultConnection="Host=dpg-cs6ebhtumphs73b7t9pg-a;Port=5432;Database=virtualclassroom_postgres_instance;Username=admin;Password=WfJw0yGLMCMhnuNbkvCN3Bg1AjTOwot3;"
