@@ -26,6 +26,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-ENV ConnectionStrings__DefaultConnection="postgresql://admin:WfJw0yGLMCMhnuNbkvCN3Bg1AjTOwot3@dpg-cs6ebhtumphs73b7t9pg-a/virtualclassroom_postgres_instance"
+ENV ConnectionStrings__DefaultConnection="Host=dpg-cs6ebhtumphs73b7t9pg-a;Port=5432;Database=virtualclassroom_postgres_instance;Username=admin;Password=WfJw0yGLMCMhnuNbkvCN3Bg1AjTOwot3;"
 
 ENTRYPOINT ["bash", "-c","dotnet ef database update --no-build; dotnet VirtualClassRoom.dll"]
