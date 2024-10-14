@@ -44,8 +44,12 @@ WORKDIR "/src/VirtualClassRoom"
 RUN dotnet publish "./VirtualClassRoom.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Run migrations to update the database
-WORKDIR /src/Persistence
-RUN dotnet ef database update --no-build --project Persistence.csproj
+# Switch to the directory where the project file exists
+WORKDIR "/src/Persistence"
+# Ensure to build before running the migration
+RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
+# Run the migration
+RUN dotnet ef database update --no-build --project Persistence.csproj --context VirtualClassRoomDbContext
 
 FROM base AS final
 WORKDIR /app
