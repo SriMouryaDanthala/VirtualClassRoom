@@ -29,7 +29,7 @@ RUN dotnet publish "./VirtualClassRoom.csproj" -c $BUILD_CONFIGURATION -o /app/p
 
 # Run migrations to update the database
 WORKDIR /app/publish
-RUN dotnet ef database update --no-build
+RUN dotnet ef database update --no-build --project Persistence.csproj
 
 FROM base AS final
 WORKDIR /src/Persistence
