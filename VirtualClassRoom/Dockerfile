@@ -15,6 +15,10 @@ COPY ["Persistence/Persistence.csproj", "Persistence/"]
 COPY ["VirtualClassRoomMediator/VirtualClassRoomMediator.csproj", "VirtualClassRoomMediator/"]
 RUN dotnet restore "./VirtualClassRoom/VirtualClassRoom.csproj"
 COPY . .
+
+WORKDIR "/src/Persistence"
+RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
+
 WORKDIR "/src/VirtualClassRoom"
 RUN dotnet build "./VirtualClassRoom.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
