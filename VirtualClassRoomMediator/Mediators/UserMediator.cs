@@ -11,6 +11,7 @@ using VirtualClassRoomMediator.Handlers;
 
 namespace VirtualClassRoomMediator.Mediators
 {
+    // TODO : create a method to retrive user by userID.
     public class UserMediator
     {
         private readonly VirtualClassRoomDbContext _dbContext;
@@ -115,6 +116,13 @@ namespace VirtualClassRoomMediator.Mediators
         {
             var handlerResp = _handler.GetUserByUserId(UserId);
             return handlerResp.Data == null ? false : true;
+        }
+
+        public bool IsExistingTeacher(Guid UserId)
+        {
+            var handlerResp = _handler.GetUserByUserId(UserId);
+            var TeacherRole = _dbContext.UserRoles.Where(x => x.UserRoleName.Equals("Teacher")).First().UserRoleId;
+            return handlerResp.Data != null && handlerResp.Data.UserRoleId.Equals(TeacherRole) ? true : false;
         }
 
 
