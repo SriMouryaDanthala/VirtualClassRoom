@@ -8,7 +8,7 @@ namespace VirtualClassRoomDTO.DTOModels
 {
     public class UserRoleDTO
     {
-        public Guid UserRoleID { get; set; }
-        public string UserRoleName { get; set; }
+        public Guid UserRoleID { get; set; } = Guid.Empty;
+        public string UserRoleName { get; set; } = string.Empty;
     }
 }
