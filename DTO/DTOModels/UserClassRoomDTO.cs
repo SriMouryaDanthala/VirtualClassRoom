@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace VirtualClassRoomDTO.DTOModels
 {
-    internal class UserClassRoomDTO
+    public class UserClassRoomDTO
     {
+        public Guid ClassRoomId { get; set; } = Guid.Empty;
+        public Guid EnrolledUserId { get; set; }
+        public string classRoomName { get; set; }
+        public Guid classRoomInchargeID { get; set; }
+        public string classRoomInchargeLogin { get; set; }
     }
 }

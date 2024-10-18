@@ -8,8 +8,8 @@ namespace Persistence.Models
 {
     public class UserClassRoomJoin
     {
-        public Guid ClassRoomId { get; set; }
-        public Guid UserId { get; set; }
+        public Guid ClassRoomId { get; set; } = Guid.Empty;
+        public Guid UserId { get; set; } = Guid.Empty;
 
         public UserModel User { get; set; }
 

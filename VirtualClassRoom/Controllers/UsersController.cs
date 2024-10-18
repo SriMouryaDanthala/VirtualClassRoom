@@ -46,7 +46,7 @@ namespace VirtualClassRoom.Controllers
             var res = _mediator.DeleteUser(UserID);
             return res.Success ? Ok(res) : NotFound(res);
         }
-
+        
 
     }
 }

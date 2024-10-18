@@ -97,7 +97,7 @@ namespace VirtualClassRoomMediator.Mediators
         }
 
 
-        private bool IsVailidClassRoom(Guid classRoomId)
+        internal bool IsVailidClassRoom(Guid classRoomId)
         {
             var  handlerResponse  = _handler.GetClassRoomDetails(classRoomId);
             return handlerResponse.Success;

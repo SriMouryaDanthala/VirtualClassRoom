@@ -112,18 +112,20 @@ namespace VirtualClassRoomMediator.Mediators
             var handlerResp = _handler.GetUserByUserLogin(UserName);
             return handlerResp.Data == null ? false : true;
         }
-        private bool IsExistingUser(Guid UserId)
+        internal bool IsExistingUser(Guid UserId)
         {
             var handlerResp = _handler.GetUserByUserId(UserId);
             return handlerResp.Data == null ? false : true;
         }
 
-        public bool IsExistingTeacher(Guid UserId)
+        internal bool IsExistingTeacher(Guid UserId)
         {
             var handlerResp = _handler.GetUserByUserId(UserId);
             var TeacherRole = _dbContext.UserRoles.Where(x => x.UserRoleName.Equals("Teacher")).First().UserRoleId;
             return handlerResp.Data != null && handlerResp.Data.UserRoleId.Equals(TeacherRole) ? true : false;
         }
+
+
 
 
     }
