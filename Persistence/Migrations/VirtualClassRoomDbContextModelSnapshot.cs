@@ -48,6 +48,40 @@ namespace Persistence.Migrations
                     b.ToTable("ClassRooms");
                 });
 
+            modelBuilder.Entity("Persistence.Models.CommentModel", b =>
+                {
+                    b.Property<Guid>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CommentClassRoom")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CommentContent")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CommentTimestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CommentType")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CommentUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ReplyToComment")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("CommentClassRoom");
+
+                    b.HasIndex("CommentUserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("Persistence.Models.UserClassRoomJoin", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -119,6 +153,25 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Persistence.Models.CommentModel", b =>
+                {
+                    b.HasOne("Persistence.Models.ClassRoomModel", "ClassRoomOfTheComment")
+                        .WithMany("CommentsInClassRoom")
+                        .HasForeignKey("CommentClassRoom")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Persistence.Models.UserModel", "CommentedByUser")
+                        .WithMany("CommentsByUser")
+                        .HasForeignKey("CommentUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClassRoomOfTheComment");
+
+                    b.Navigation("CommentedByUser");
+                });
+
             modelBuilder.Entity("Persistence.Models.UserClassRoomJoin", b =>
                 {
                     b.HasOne("Persistence.Models.ClassRoomModel", "ClassRoom")
@@ -152,11 +205,15 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Persistence.Models.ClassRoomModel", b =>
                 {
                     b.Navigation("ClassRooms");
+
+                    b.Navigation("CommentsInClassRoom");
                 });
 
             modelBuilder.Entity("Persistence.Models.UserModel", b =>
                 {
                     b.Navigation("ClassRooms");
+
+                    b.Navigation("CommentsByUser");
 
                     b.Navigation("UserClassRoomJoins");
                 });

@@ -14,6 +14,7 @@ namespace Persistence.DBContext
         public DbSet<UserModel> Users { get; set; }
         public DbSet<ClassRoomModel> ClassRooms { get; set; }
         public DbSet<UserClassRoomJoin> UserClassRoomJoins { get; set; }
+        public DbSet<CommentModel> Comments { get; set; }
         public VirtualClassRoomDbContext(DbContextOptions options) : base(options) 
         {
             
@@ -37,6 +38,20 @@ namespace Persistence.DBContext
                 .WithMany(sc => sc.ClassRooms)
                 .HasForeignKey(sc => sc.ClassRoomId)
                 .OnDelete(DeleteBehavior.Cascade); ;
+            #endregion
+
+            #region Defining the relationhip for the comments
+            modelBuilder.Entity<CommentModel>()
+                .HasOne(cm => cm.CommentedByUser)
+                .WithMany(cm => cm.CommentsByUser)
+                .HasForeignKey(cm => cm.CommentUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CommentModel>()
+                .HasOne(cm => cm.ClassRoomOfTheComment)
+                .WithMany(cm => cm.CommentsInClassRoom)
+                .HasForeignKey(cm => cm.CommentClassRoom)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
         }

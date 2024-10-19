@@ -24,5 +24,8 @@ namespace Persistence.Models
         public ICollection<ClassRoomModel> ClassRooms { get; set; }
         // a user can be enrolled in many classes.
         public ICollection<UserClassRoomJoin> UserClassRoomJoins { get; set; }
+
+        // a user can make multiple comments.
+        public ICollection<CommentModel> CommentsByUser { get; set; }
     }
 }

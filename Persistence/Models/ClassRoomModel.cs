@@ -22,5 +22,8 @@ namespace Persistence.Models
         // different classes can have same user
         public ICollection<UserClassRoomJoin> ClassRooms { get; set; }
 
+        // a classroom can have multiple comments
+        public ICollection<CommentModel> CommentsInClassRoom { get; set; }
+
     }
 }
