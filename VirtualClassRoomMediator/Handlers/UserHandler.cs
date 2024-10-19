@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtualClassRoomDTO.DTOModels;
 using VirtualClassRoomDTO.GenericDataTypes;
+using VirtualClassRoomMediator.Utilities;
 
 namespace VirtualClassRoomMediator.Handlers
 {
@@ -27,7 +28,7 @@ namespace VirtualClassRoomMediator.Handlers
             {
                 UserId = Guid.NewGuid(),
                 UserLogin = user.UserName,
-                UserPassword = user.UserPassword,
+                UserPassword = new HashingUtility().HashTheText(user.UserPassword),
                 UserRoleId = UserRoleID,
                 UserTimestamp = DateTime.Now.ToUniversalTime(),
             };

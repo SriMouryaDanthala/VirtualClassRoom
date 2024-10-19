@@ -107,7 +107,7 @@ namespace VirtualClassRoomMediator.Mediators
                 !(User == null) ? User.failureMessage : "Not a vaidUser"
             );
         }
-        private bool IsExistingUser(string UserName)
+        internal bool IsExistingUser(string UserName)
         {
             var handlerResp = _handler.GetUserByUserLogin(UserName);
             return handlerResp.Data == null ? false : true;

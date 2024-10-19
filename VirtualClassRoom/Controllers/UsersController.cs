@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using VirtualClassRoomDTO.DTOModels;
 using VirtualClassRoomDTO.GenericDataTypes;
@@ -18,6 +19,7 @@ namespace VirtualClassRoom.Controllers
         }
         [HttpPost]
         [Route("EnrollUser")]
+        [AllowAnonymous]
         public ActionResult<ApiResponse<List<UserDTO>>> CreateUser(UserRegistrationDTO newUser)
         {
             var res = _mediator.createUser(newUser);
