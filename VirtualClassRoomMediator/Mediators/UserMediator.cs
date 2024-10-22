@@ -22,11 +22,11 @@ namespace VirtualClassRoomMediator.Mediators
             _handler = new UserHandler( context );
         }
 
-        public ApiResponse<UserRegistrationDTO> createUser(UserRegistrationDTO newUser)
+        public ApiResponse<UserDTO> createUser(UserRegistrationDTO newUser)
         {
-            var resp = new ApiResponse<UserRegistrationDTO>();
+            var resp = new ApiResponse<UserDTO>();
             var roleId = _dbContext.UserRoles.Where(ur => ur.UserRoleName.Equals(newUser.UserRole)).FirstOrDefault()?.UserRoleId;
-            HandlerResponse<UserRegistrationDTO> createdUser;
+            HandlerResponse<UserDTO> createdUser;
             if (!IsExistingUser(newUser.UserName) && roleId!=null)
             {
                 createdUser = _handler.CreateUser(newUser, (Guid)roleId);
@@ -124,9 +124,5 @@ namespace VirtualClassRoomMediator.Mediators
             var TeacherRole = _dbContext.UserRoles.Where(x => x.UserRoleName.Equals("Teacher")).First().UserRoleId;
             return handlerResp.Data != null && handlerResp.Data.UserRoleId.Equals(TeacherRole) ? true : false;
         }
-
-
-
-
     }
 }

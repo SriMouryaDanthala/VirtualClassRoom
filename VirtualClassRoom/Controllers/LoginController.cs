@@ -6,7 +6,7 @@ using VirtualClassRoomMediator.Mediators;
 
 namespace VirtualClassRoom.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("LoginController")]
     [ApiController]
     public class LoginController : ControllerBase
     {

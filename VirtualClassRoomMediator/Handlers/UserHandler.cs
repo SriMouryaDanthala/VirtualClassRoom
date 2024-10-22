@@ -20,10 +20,10 @@ namespace VirtualClassRoomMediator.Handlers
         }
 
 
-        public HandlerResponse<UserRegistrationDTO> CreateUser(UserRegistrationDTO user,Guid UserRoleID)
+        public HandlerResponse<UserDTO> CreateUser(UserRegistrationDTO user,Guid UserRoleID)
         {
             // write an equivalent of the insert SQL.
-            var response = new HandlerResponse<UserRegistrationDTO>(); 
+            var response = new HandlerResponse<UserDTO>(); 
             UserModel newUser =  new UserModel()
             {
                 UserId = Guid.NewGuid(),
@@ -38,7 +38,11 @@ namespace VirtualClassRoomMediator.Handlers
                 _dbContext.SaveChanges();
                 return response.CreateHandlerResponse(
                         true,
-                        user
+                        new UserDTO()
+                        {
+                            UserID = newUser.UserId,
+                            UserLogin = newUser.UserLogin
+                        }
                 );
 
             }

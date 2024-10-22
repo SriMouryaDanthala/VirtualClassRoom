@@ -20,7 +20,7 @@ namespace VirtualClassRoom.Controllers
         [HttpPost]
         [Route("EnrollUser")]
         [AllowAnonymous]
-        public ActionResult<ApiResponse<List<UserDTO>>> CreateUser(UserRegistrationDTO newUser)
+        public ActionResult<ApiResponse<UserDTO>> CreateUser(UserRegistrationDTO newUser)
         {
             var res = _mediator.createUser(newUser);
             return res.Success ? Ok(res) : BadRequest(res);

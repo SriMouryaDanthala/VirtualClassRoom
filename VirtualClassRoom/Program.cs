@@ -51,7 +51,6 @@ builder.Services.AddSwaggerGen(c =>
 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<VirtualClassRoomDbContext>(
         options => options.UseNpgsql(ConnectionString));
-builder.Services.AddScoped<UserRoleDbContext>();
 builder.Services.RegisterMediators(Assembly.GetExecutingAssembly());
 /* Adding authentication service */
 builder.Services.AddAuthentication(options =>
