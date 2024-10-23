@@ -115,7 +115,7 @@ namespace VirtualClassRoomMediator.Handlers
                         ClassRoomId = classRoom != null ? classRoom.ClassRoomId : Guid.Empty,
                         ClassRoomName = classRoom != null ? classRoom.ClassRoomName : "",
                         ClassRoomCount = classRoom != null ? classRoom.ClassRoomCount : 0,
-
+                        ClassRoomInchargeId = classRoom!=null ? classRoom.ClassRoomInchargeId : Guid.Empty,
                     },
                     failureMessage = classRoom != null ? "" : $"ClassRoom not found for ID ${classRoomID.ToString()}"
                 };
