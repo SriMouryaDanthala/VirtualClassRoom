@@ -12,8 +12,8 @@ using Persistence.DBContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(VirtualClassRoomDbContext))]
-    [Migration("20241019135212_AddingCommentsRelation")]
-    partial class AddingCommentsRelation
+    [Migration("20241206160252_InitialSquash")]
+    partial class InitialSquash
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
