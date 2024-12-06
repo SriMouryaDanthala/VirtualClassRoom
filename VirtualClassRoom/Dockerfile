@@ -30,6 +30,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-ENV ConnectionStrings__DefaultConnection="Host=dpg-cs6ebhtumphs73b7t9pg-a;Port=5432;Database=virtualclassroom_postgres_instance;Username=admin;Password=WfJw0yGLMCMhnuNbkvCN3Bg1AjTOwot3;"
+ENV ConnectionStrings__DefaultConnection="Host=dpg-ct9f9356l47c73as0c0g-a;Port=5432;Database=virtualclassroom_5vmo;Username=virtualclassroom_5vmo_user;Password=Stjnf2Zjk2CUwbxC5aPwpFjlzA6qydlw;"
 
 ENTRYPOINT ["dotnet", "VirtualClassRoom.dll"]
